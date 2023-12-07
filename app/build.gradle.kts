@@ -18,6 +18,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
     }
 
     buildTypes {
@@ -50,6 +52,8 @@ android {
 }
 
 dependencies {
+    implementation ("org.xerial:sqlite-jdbc:3.34.0")
+
     implementation("androidx.navigation:navigation-compose:2.6.0-alpha04")
 
     implementation("androidx.core:core-ktx:1.9.0")
