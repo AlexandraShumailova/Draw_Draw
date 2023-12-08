@@ -1,14 +1,10 @@
 package com.example.draw_draw.screens.admin
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -17,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -26,11 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AdminSubjectsScreen (){
+fun AdminTTScreen (){
     var color = Color.Gray
-    val goMenu = remember {
-        mutableStateOf(false)
-    }
     val showAllFlag = remember {
         mutableStateOf(false)
     }
@@ -40,83 +32,61 @@ fun AdminSubjectsScreen (){
     val deleteFlag = remember {
         mutableStateOf(false)
     }
-    if(!goMenu.value){
-        Column {
-            Row(
+    Column {
+        Row (modifier = Modifier
+            .height(70.dp)
+            .background(Color.DarkGray)){
+            Button(
                 modifier = Modifier
-                    .height(40.dp)
-                    .fillMaxWidth()
-                    .background(color = Color.White)
-                    .padding(start = 15.dp, end = 15.dp)
-                    .clickable { goMenu.value = true },
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                    .padding(10.dp)
+                    .weight(1f),
+                onClick = { color = Color.Green
+                    showAllFlag.value = true
+                    addNewFlag.value = false
+                    deleteFlag.value = false},
+                colors = ButtonDefaults.buttonColors(containerColor = color)) {
+                Text(text = "Show all")
+            }
+            Button(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .weight(1f),
+                onClick = { color = Color.Green
+                    showAllFlag.value = false
+                    addNewFlag.value = true
+                    deleteFlag.value = false},
+                colors = ButtonDefaults.buttonColors(containerColor = color)) {
+                Text(text = "Add new")
+            }
+            Button(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .weight(1f),
+                onClick = { color = Color.Green
+                    showAllFlag.value = false
+                    addNewFlag.value = false
+                    deleteFlag.value = true},
+                colors = ButtonDefaults.buttonColors(containerColor = color)
             ) {
-                Text(text = "adm client",
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
-            }
-            Row (modifier = Modifier
-                .height(70.dp)
-                .background(Color.DarkGray)){
-                Button(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(1f),
-                    onClick = { color = Color.Green
-                        showAllFlag.value = true
-                        addNewFlag.value = false
-                        deleteFlag.value = false},
-                    colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Show all")
-                }
-                Button(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(1f),
-                    onClick = { color = Color.Green
-                        showAllFlag.value = false
-                        addNewFlag.value = true
-                        deleteFlag.value = false},
-                    colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Add new")
-                }
-                Button(
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .weight(1f),
-                    onClick = { color = Color.Green
-                        showAllFlag.value = false
-                        addNewFlag.value = false
-                        deleteFlag.value = true},
-                    colors = ButtonDefaults.buttonColors(containerColor = color)
-                ) {
-                    Text(text = "Delete")
-                }
+                Text(text = "Delete")
             }
         }
-
-        if (showAllFlag.value){
-            ShowAllSubjects()
-        }
-        if (addNewFlag.value){
-            AddNewSubject()
-        }
-        if (deleteFlag.value){
-            DeleteSubject()
-        }
     }
-    else{
-        AdminMenuScreen()
+    if (showAllFlag.value){
+        ShowAllTT()
     }
-
-
+    if (addNewFlag.value){
+        AddNewTT()
+    }
+    if (deleteFlag.value){
+        DeleteTT()
+    }
 
 }
 
 @Composable
-fun ShowAllSubjects(){
+fun ShowAllTT(){
     Column {
-        Spacer(modifier = Modifier.height(40.dp))
         Row (modifier = Modifier.height(70.dp)){
             Box(modifier = Modifier
                 .weight(1f)
@@ -140,9 +110,8 @@ fun ShowAllSubjects(){
     }
 }
 @Composable
-fun AddNewSubject(){
+fun AddNewTT(){
     Column {
-        Spacer(modifier = Modifier.height(40.dp))
         Row (modifier = Modifier.height(70.dp)){
             Box(modifier = Modifier
                 .weight(1f)
@@ -170,9 +139,8 @@ fun AddNewSubject(){
     }
 }
 @Composable
-fun DeleteSubject(){
+fun DeleteTT(){
     Column {
-        Spacer(modifier = Modifier.height(40.dp))
         Row (modifier = Modifier.height(70.dp)){
             Box(modifier = Modifier
                 .weight(2f)

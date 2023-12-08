@@ -20,11 +20,13 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,20 +42,29 @@ import androidx.compose.ui.unit.sp
 import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.subjectList
 
-@Preview
 @Composable
-fun TimetableScreen(){
-    Column {
-        Head("Timetable")
-        Spacer(modifier = Modifier.height(10.dp))
-        ChoseDay()
-//        TimetableOfDay()
+fun TimetableScreen(currentList: List<Subject>, usertype: String){
+    var thisScreen = remember {
+        mutableStateOf(true)
     }
-
+    val goSubCardBook = remember {
+        mutableStateOf<Subject?>(null)
+    }
+    if (goSubCardBook.value==null){
+        Column {
+            Head("Timetable")
+            Text(text = usertype)
+            Spacer(modifier = Modifier.height(10.dp))
+            ChoseDay(currentList, goSubCardBook)
+        }
+    }
+    else{
+        SubjectCardWithBookingBtn(item = goSubCardBook.value!!, {thisScreen.value=false})
+    }
 }
 
 @Composable
-fun ChoseDay(){
+fun ChoseDay(list: List<Subject>, go: MutableState<Subject?>){
     val goDayFlag = remember {
         mutableStateOf<String?>(null)
     }
@@ -102,16 +113,14 @@ fun ChoseDay(){
             }
         }
     }
-
     if (goDayFlag.value!=null){
-        TimetableOfDay(goDayFlag.value!!)
+        TimetableOfDay(goDayFlag.value!!, list, go)
     }
 }
 
 @Composable
-fun TimetableOfDay (day: String){
-
-    var listForDay = subjectList.filter { it.day == day }
+fun TimetableOfDay (day: String, list: List<Subject>, go: MutableState<Subject?>){
+    var listForDay = list.filter { it.day == day }
     Column ( modifier = Modifier
         .verticalScroll(rememberScrollState())
         .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
@@ -125,7 +134,7 @@ fun TimetableOfDay (day: String){
             fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
         listForDay.forEach{ item->
-            TimetableItem(item)
+            TimetableItem(item, go)
         }
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -134,16 +143,13 @@ fun TimetableOfDay (day: String){
 }
 
 @Composable
-fun TimetableItem(item:Subject){
-    val goSubCard = remember {
-        mutableStateOf<Subject?>(null)
-    }
-//    if(goSubCard.value==null) {
-        Card {
+fun TimetableItem(item:Subject, goSubToBook: MutableState<Subject?>){
+        Card (modifier = Modifier
+            .clickable { goSubToBook.value = item}
+        ){
             Column(modifier = Modifier
                 .padding(horizontal = 20.dp, vertical = 10.dp)
                 .fillMaxWidth()
-                .clickable { goSubCard.value = item }
             ) {
                 Text(
                     text = item.time,
@@ -163,18 +169,8 @@ fun TimetableItem(item:Subject){
                     fontSize = 20.sp
                 )
                 Spacer(modifier = Modifier.height(5.dp))
-//        Button(onClick = { /*TODO*/ }) {
-//            Text(text = "Go")
-//        }
             }
         }
         Spacer(modifier = Modifier.height(10.dp))
-//    }
-
-
-    if (goSubCard.value!=null){
-       // SubjectCard(goSubCard.value!!)
-        //booking box
-    }
 }
 

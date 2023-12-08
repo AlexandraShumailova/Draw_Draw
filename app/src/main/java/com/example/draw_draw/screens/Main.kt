@@ -27,6 +27,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,23 +44,41 @@ import androidx.compose.ui.unit.sp
 import com.example.draw_draw.R
 import com.example.draw_draw.data.subjectList
 import com.example.draw_draw.data.teacherList
+import com.example.draw_draw.data.userType
+import com.example.draw_draw.screens.admin.AdminMenuScreen
 
-@Preview
 @Composable
 fun Main(){
-    Column {
-        Head("Draw Draw")
-        Column ( modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
-        ){
-            Spacer(modifier = Modifier.height(10.dp))
-            TimetableOnMain()
-            Spacer(modifier = Modifier.height(10.dp))
-            GroupLessons()
-            Spacer(modifier = Modifier.height(10.dp))
-            //Teachers()
-            BookButton()
+    var go = remember {
+        mutableStateOf<String?>(null)
+    }
+
+    if (userType=="Admin"){
+        AdminMenuScreen()
+    }
+    else{
+        when (go.value) {
+            "TT" -> TimetableScreen(subjectList, userType)
+            "Group lessons" -> SubjectScreen()
+            "Profile" -> print("x == 1")
+            else -> { // Note the block
+                Column {
+                    Head("Draw Draw")
+                    Column ( modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
+                    ){
+                        Text(text = userType)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        TimetableOnMain()
+                        Spacer(modifier = Modifier.height(10.dp))
+                        GroupLessons(go)
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //Teachers()
+                        BookButton(go)
+                    }
+                }
+            }
         }
     }
 
@@ -69,7 +90,10 @@ fun Head(text: String) {
         modifier = Modifier
             .height(40.dp)
             .fillMaxWidth()
-            .background(color = Color.Gray)
+            .background(color = Color.White)
+            .padding(start = 15.dp, end = 15.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
         Text(text = text,
             color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
@@ -77,17 +101,7 @@ fun Head(text: String) {
 }
 
 @Composable
-fun Space(){
-    Row(
-        modifier = Modifier
-            .height(20.dp)
-            .fillMaxWidth()
-            .background(color = Color.DarkGray)
-    ) {    }
-}
-
-@Composable
-fun TimetableOnMain() {
+fun TimetableOnMain(/*go: MutableState<String?>*/) {
     Text(
         text = "Next lesson",
         color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold,
@@ -118,13 +132,16 @@ fun TimetableOnMain() {
 }
 
 @Composable
-fun GroupLessons(){
-    Text(
-        text = "Group lesson",
-        color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold
-    )
+fun GroupLessons(go: MutableState<String?>){
+    Row (modifier = Modifier
+        .fillMaxWidth()
+        .clickable { go.value = "Group lessons" }
+    ){
+        Text(
+            text = "Group lesson",
+            color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+    }
     Spacer(modifier = Modifier.height(10.dp))
-
     Row(
         modifier = Modifier
             .fillMaxHeight()
@@ -133,7 +150,7 @@ fun GroupLessons(){
     ) {
         //Text("Group Lessons", modifier = Modifier.weight(1f))
         subjectList.forEach{subject ->
-            Card (modifier = Modifier.clickable {  }){
+            Card (modifier = Modifier.clickable { }){
                 Column (modifier = Modifier
                     .padding(10.dp)
                 ){
@@ -204,8 +221,8 @@ fun Teachers(){
 }
 
 @Composable
-fun BookButton(){
-    Button(onClick = { },
+fun BookButton(go: MutableState<String?>){
+    Button(onClick = { go.value = "TT" },
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)) {
         Text(text = "Booking",

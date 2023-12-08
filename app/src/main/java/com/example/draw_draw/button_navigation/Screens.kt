@@ -38,3 +38,35 @@ fun Screen4() {
         text = "Screen4",
         textAlign = TextAlign.Center)
 }
+
+@Composable
+fun Screen1a() {
+    Text(
+        modifier = Modifier.fillMaxSize().wrapContentHeight(),
+        text = "Screen1a",
+        textAlign = TextAlign.Center)
+}
+
+@Composable
+fun Screen2a() {
+    Text(
+        modifier = Modifier.fillMaxSize().wrapContentHeight(),
+        text = "Screen2a",
+        textAlign = TextAlign.Center)
+}
+
+@Composable
+fun Screen3a() {
+    Text(
+        modifier = Modifier.fillMaxSize().wrapContentHeight(),
+        text = "Screen3a",
+        textAlign = TextAlign.Center)
+}
+
+@Composable
+fun Screen4a() {
+    Text(
+        modifier = Modifier.fillMaxSize().wrapContentHeight(),
+        text = "Screen4a",
+        textAlign = TextAlign.Center)
+}

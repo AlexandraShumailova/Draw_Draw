@@ -47,3 +47,38 @@ fun BottomNavigation(
         }
     }
 }
+
+@Composable
+fun BottomNavigationA(
+    navController: NavController
+){
+    val listItems = listOf(
+        BottomItem.Screen1a,
+        BottomItem.Screen2a,
+        BottomItem.Screen3a,
+        BottomItem.Screen4a
+    )
+    BottomNavigation(
+        backgroundColor = Color.White
+    ) {
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = backStackEntry?.destination?.route
+
+        listItems.forEach{ item->
+            BottomNavigationItem(
+                selected = currentRoute == item.route,
+                onClick = {
+                    navController.navigate(item.route)
+                },
+                icon = {
+                    Icon(painter = painterResource(id = item.iconId), contentDescription = "Icon")
+                },
+                label = {
+                    Text(text = item.title, fontSize = 9.sp)
+                },
+                selectedContentColor = Color.Red,
+                unselectedContentColor = Color.Gray
+            )
+        }
+    }
+}

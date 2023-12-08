@@ -20,3 +20,17 @@ fun MainScreen() {
         NavGraph(navHostController = navController)
     }
 }
+
+/*
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun MainScreenA() {
+    val navController = rememberNavController()
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = { BottomNavigationA(navController = navController) }
+    ) {
+        NavGraphA(navHostController = navController)
+    }
+}*/

@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.draw_draw.MainActivity
 import com.example.draw_draw.button_navigation.MainScreen
+import com.example.draw_draw.data.userType
+//import com.example.draw_draw.button_navigation.MainScreenA
 import com.example.draw_draw.screens.admin.AdminMenuScreen
 
 @Composable
@@ -98,7 +100,6 @@ fun HelloScreen(){
             TextButton(
                 onClick = { goAdminFlag.value = true },
                 modifier = Modifier.fillMaxWidth(),
-//                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
                 Text(
                     text = "Log in as an admin",
@@ -109,10 +110,15 @@ fun HelloScreen(){
         }
     }
     if (goClientFlag.value){
+        goAdminFlag.value = false
+        userType="Client"
         MainScreen()
+
     }
 
     if (goAdminFlag.value){
-        AdminMenuScreen()
+        goClientFlag.value = false
+        userType="Admin"
+        MainScreen()
     }
 }
