@@ -42,8 +42,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.draw_draw.R
+import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.subjectList
 import com.example.draw_draw.data.teacherList
+import com.example.draw_draw.data.ttList
 import com.example.draw_draw.data.userType
 import com.example.draw_draw.screens.admin.AdminMenuScreen
 
@@ -52,34 +54,45 @@ fun Main(){
     var go = remember {
         mutableStateOf<String?>(null)
     }
+    var goSubCard = remember {
+        mutableStateOf<Subject?>(null)
+    }
 
     if (userType=="Admin"){
         AdminMenuScreen()
     }
     else{
-        when (go.value) {
-            "TT" -> TimetableScreen(subjectList, userType)
-            "Group lessons" -> SubjectScreen()
-            "Profile" -> print("x == 1")
-            else -> { // Note the block
-                Column {
-                    Head("Draw Draw")
-                    Column ( modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
-                    ){
-                        Text(text = userType)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        TimetableOnMain()
-                        Spacer(modifier = Modifier.height(10.dp))
-                        GroupLessons(go)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        //Teachers()
-                        BookButton(go)
+        if(goSubCard.value==null){
+            when (go.value) {
+                "TT" -> TimetableScreen(ttList)
+                "Group lessons" -> SubjectScreen()
+                "Profile" -> print("x == 1")
+                else -> { // Note the block
+                    Column {
+                        Head("Draw Draw")
+                        Column ( modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                            .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
+                        ){
+//                        Text(text = userType)
+                            if (userType!="Admin"){
+                                Spacer(modifier = Modifier.height(10.dp))
+                                TimetableOnMain("Next lesson")
+                            }
+                            Spacer(modifier = Modifier.height(10.dp))
+                            GroupLessons(go, goSubCard)
+                            Spacer(modifier = Modifier.height(10.dp))
+                            //Teachers()
+                            BookButton(go)
+                        }
                     }
                 }
             }
         }
+        else{
+            SubjectCard(item = goSubCard.value!!, "main")
+        }
+
     }
 
 }
@@ -101,9 +114,9 @@ fun Head(text: String) {
 }
 
 @Composable
-fun TimetableOnMain(/*go: MutableState<String?>*/) {
+fun TimetableOnMain(text: String) {
     Text(
-        text = "Next lesson",
+        text = text,
         color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold,
     )
     Spacer(modifier = Modifier.height(10.dp))
@@ -132,7 +145,7 @@ fun TimetableOnMain(/*go: MutableState<String?>*/) {
 }
 
 @Composable
-fun GroupLessons(go: MutableState<String?>){
+fun GroupLessons(go: MutableState<String?>, goSubCard: MutableState<Subject?>){
     Row (modifier = Modifier
         .fillMaxWidth()
         .clickable { go.value = "Group lessons" }
@@ -150,11 +163,11 @@ fun GroupLessons(go: MutableState<String?>){
     ) {
         //Text("Group Lessons", modifier = Modifier.weight(1f))
         subjectList.forEach{subject ->
-            Card (modifier = Modifier.clickable { }){
+            Card (modifier = Modifier.clickable { goSubCard.value = subject }){
                 Column (modifier = Modifier
                     .padding(10.dp)
                 ){
-                    Image(painter = painterResource(id = subject.photoId),
+                    Image(painter = painterResource(id = subject.photoId!!),
                         contentDescription = "photo",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -175,47 +188,6 @@ fun GroupLessons(go: MutableState<String?>){
                 }
             }
             Spacer(modifier = Modifier.width(10.dp))
-        }
-    }
-}
-
-@Composable
-fun Teachers(){
-    Row(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth()
-            .background(color = Color.Gray)
-            .horizontalScroll(rememberScrollState())
-    ) {
-        teacherList.forEach{teacher ->
-            Column ( modifier = Modifier
-                .clip(
-                    RoundedCornerShape(
-                        topStart = 20.dp,
-                    )
-                )
-                .padding(5.dp)
-                .width(150.dp)
-                .fillMaxHeight()
-                .border(border = BorderStroke(width = 1.dp, color = Color.Black))
-                .background(color = Color.White)
-            ){
-                Image(painter = painterResource(id = teacher.photoId),
-                    contentDescription = "photo",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp))
-                Text(
-                    text = teacher.teacherName,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(5.dp),
-                    color = Color.DarkGray,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
         }
     }
 }

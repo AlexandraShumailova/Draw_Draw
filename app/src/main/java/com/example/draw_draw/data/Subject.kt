@@ -5,13 +5,13 @@ import java.time.Duration
 
 class Subject (
     var subjectName: String,
-    var duration: String,
+    var duration: String?,
     var teacher: String,
     var numberOfPeople: Int,
     var time: String,
     var day: String,
-    var photoId: Int,
-    var decription: String,
+    var photoId: Int?,
+    var decription: String?,
 )
 
 val sub1 = Subject("Sub1", "1 hour", "teacher name",
@@ -25,4 +25,8 @@ val sub4 = Subject("Sub4", "1 hour", "teacher name",
 val sub5 = Subject("Sub5", "1 hour", "teacher name",
     30, "09:00","чт", R.drawable.photo, "bla bla bla")
 
-var subjectList = listOf(sub1, sub2, sub3, sub4, sub5)
+var newSubject = Subject("","","", 30, "","", R.drawable.subphoto, "")
+
+var curSubject = Subject("","","", 30, "","", R.drawable.subphoto, "")
+
+var subjectList = mutableListOf(sub1, sub2, sub3, sub4, sub5)

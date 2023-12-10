@@ -40,31 +40,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.draw_draw.data.Subject
+import com.example.draw_draw.data.TTItem
 import com.example.draw_draw.data.subjectList
+import com.example.draw_draw.data.userType
 
 @Composable
-fun TimetableScreen(currentList: List<Subject>, usertype: String){
-    var thisScreen = remember {
-        mutableStateOf(true)
-    }
+fun TimetableScreen(currentList: List<TTItem>){
     val goSubCardBook = remember {
-        mutableStateOf<Subject?>(null)
+        mutableStateOf<TTItem?>(null)
     }
     if (goSubCardBook.value==null){
         Column {
             Head("Timetable")
-            Text(text = usertype)
             Spacer(modifier = Modifier.height(10.dp))
             ChoseDay(currentList, goSubCardBook)
         }
     }
     else{
-        SubjectCardWithBookingBtn(item = goSubCardBook.value!!, {thisScreen.value=false})
+        SubjectCardWithBookingBtn(item = goSubCardBook.value!!, currentList)
     }
 }
 
 @Composable
-fun ChoseDay(list: List<Subject>, go: MutableState<Subject?>){
+fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
     val goDayFlag = remember {
         mutableStateOf<String?>(null)
     }
@@ -90,17 +88,20 @@ fun ChoseDay(list: List<Subject>, go: MutableState<Subject?>){
                     .clickable { goDayFlag.value = day }
 
             ){
-                Column {
+                Column (
+                    verticalArrangement = Arrangement.Center
+                ){
                     Text(
                         text = day,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(vertical = 10.dp),
                         color = Color.DarkGray,
                         fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
-                    Text(
+                    /*Text(
                         text = day,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -108,7 +109,7 @@ fun ChoseDay(list: List<Subject>, go: MutableState<Subject?>){
                             .fillMaxWidth(),
                         color = Color.Gray,
                         fontSize = 20.sp
-                    )
+                    )*/
                 }
             }
         }
@@ -119,7 +120,7 @@ fun ChoseDay(list: List<Subject>, go: MutableState<Subject?>){
 }
 
 @Composable
-fun TimetableOfDay (day: String, list: List<Subject>, go: MutableState<Subject?>){
+fun TimetableOfDay (day: String, list: List<TTItem>, go: MutableState<TTItem?>){
     var listForDay = list.filter { it.day == day }
     Column ( modifier = Modifier
         .verticalScroll(rememberScrollState())
@@ -128,7 +129,6 @@ fun TimetableOfDay (day: String, list: List<Subject>, go: MutableState<Subject?>
         .fillMaxHeight()
     ){
         Spacer(modifier = Modifier.height(10.dp))
-
         Text(text = day,
             color = Color.DarkGray,
             fontSize = 20.sp, fontWeight = FontWeight.Bold)
@@ -143,7 +143,7 @@ fun TimetableOfDay (day: String, list: List<Subject>, go: MutableState<Subject?>
 }
 
 @Composable
-fun TimetableItem(item:Subject, goSubToBook: MutableState<Subject?>){
+fun TimetableItem(item:TTItem, goSubToBook: MutableState<TTItem?>){
         Card (modifier = Modifier
             .clickable { goSubToBook.value = item}
         ){
@@ -158,13 +158,13 @@ fun TimetableItem(item:Subject, goSubToBook: MutableState<Subject?>){
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = item.subjectName,
+                    text = item.subject.subjectName,
                     color = Color.DarkGray,
                     fontSize = 20.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = item.duration,
+                    text = item.subject.duration!!,
                     color = Color.Gray,
                     fontSize = 20.sp
                 )

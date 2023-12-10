@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.draw_draw.data.sub1
 import com.example.draw_draw.data.subjectList
+import com.example.draw_draw.data.ttList
 import com.example.draw_draw.data.userType
 import com.example.draw_draw.screens.Main
 import com.example.draw_draw.screens.MenuScreen
@@ -29,7 +30,7 @@ fun NavGraph(
             Main()
         }
         composable("screen2"){
-            TimetableScreen(subjectList, userType)
+            TimetableScreen(ttList)
         }
         composable("screen3"){
             SubjectScreen()

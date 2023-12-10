@@ -70,7 +70,7 @@ fun SubjectScreen(){
             }
         }
         else{
-            SubjectCard(item = go.value!!,{thisScreen.value=false})
+            SubjectCard(item = go.value!!, "subjects")
         }
     }
 
@@ -103,7 +103,7 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                     .padding(10.dp)
             ) {
                 Image(
-                    painter = painterResource(id = item.photoId),
+                    painter = painterResource(id = item.photoId!!),
                     contentDescription = "photo",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -122,7 +122,7 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                     colors = CardDefaults.cardColors(Color.LightGray)
                 ) {
                     Text(
-                        text = item.duration,
+                        text = item.duration!!,
                         modifier = Modifier.padding(
                             start = 10.dp,
                             end = 10.dp,
@@ -133,7 +133,7 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                 }
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
-                    text = item.decription,
+                    text = item.decription!!,
                     color = Color.Gray, fontSize = 10.sp
                 )
                 Spacer(modifier = Modifier.height(5.dp))

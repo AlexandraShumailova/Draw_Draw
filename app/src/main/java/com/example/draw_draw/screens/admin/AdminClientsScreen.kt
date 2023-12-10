@@ -26,6 +26,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -45,6 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.draw_draw.R
 import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.User
 import com.example.draw_draw.data.newClient
@@ -80,14 +82,15 @@ fun AdminClientsScreen(){
                     .padding(start = 15.dp, end = 15.dp)
                     .clickable { goMenu.value = true },
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
                 Text(text = "adm client",
                     color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+                Spacer(modifier = Modifier.width(24.dp))
             }
             Row (modifier = Modifier
                 .height(70.dp)
-                .background(Color.DarkGray)
             ){
                 Button(
                     modifier = Modifier

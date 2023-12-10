@@ -7,14 +7,18 @@ class User (
     var login: String,
     var password: String,
     var photoId: Int,
+    var books: MutableList<TTItem>
 )
 
-val user0 = User("Alexandra", "user.login", "123", R.drawable.avatar)
-val user1 = User("user1", "user1.login", "123", R.drawable.avatar)
-val user2 = User("user2", "user2.login", "123", R.drawable.avatar)
 
-var currentUser = User("", "", "", R.drawable.avatar)
-var newClient = User("", "", "", R.drawable.avatar)
+
+val user0 = User("Alexandra", "user.login", "123", R.drawable.avatar, mutableListOf(tt1, tt2,tt3,tt4,tt5,tt6))
+val user1 = User("user1", "user1.login", "123", R.drawable.avatar, mutableListOf(tt1, tt2,tt3,tt4,tt5,tt6))
+val user2 = User("user2", "user2.login", "123", R.drawable.avatar, mutableListOf(tt1, tt2,tt3,tt4,tt5,tt6))
+
+//var currentUser = User("", "", "", R.drawable.avatar, mutableListOf())
+var currentUser = user0
+var newClient = User("", "", "", R.drawable.avatar, mutableListOf())
 
 var userType = " "
 
