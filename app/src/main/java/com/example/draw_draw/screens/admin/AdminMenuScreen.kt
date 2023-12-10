@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.draw_draw.data.bookList
+import com.example.draw_draw.screens.AddPicture
 import com.example.draw_draw.screens.Head
 import com.example.draw_draw.screens.ShowAdminStatus
 
@@ -58,7 +59,7 @@ fun AdminMenuScreen(){
                     onClick = { adminClientsFlag.value = true
                                 }
                 ) {
-                    Text(text = "Clients")
+                    Text(text = "Клиенты студии")
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Button(
@@ -67,7 +68,7 @@ fun AdminMenuScreen(){
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
                     onClick = { adminSubFlag.value = true }) {
-                    Text(text = "Subjects")
+                    Text(text = "Групповые занятия")
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Button(
@@ -76,7 +77,7 @@ fun AdminMenuScreen(){
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
                     onClick = { adminTTFlag.value = true }) {
-                    Text(text = "Timetable")
+                    Text(text = "Расписание")
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Button(
@@ -85,7 +86,7 @@ fun AdminMenuScreen(){
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray),
                     onClick = { adminBookingsFlag.value = true }) {
-                    Text(text = "bookings")
+                    Text(text = "Записи")
                 }
             }
 

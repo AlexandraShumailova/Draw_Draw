@@ -41,7 +41,7 @@ fun BottomNavigation(
                 label = {
                         Text(text = item.title, fontSize = 9.sp)
                 },
-                selectedContentColor = Color.Red,
+                selectedContentColor = Color.Gray,
                 unselectedContentColor = Color.Gray
             )
         }

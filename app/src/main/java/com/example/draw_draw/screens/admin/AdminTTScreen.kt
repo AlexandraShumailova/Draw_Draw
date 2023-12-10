@@ -75,8 +75,8 @@ fun AdminTTScreen (){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
-                Text(text = "TT",
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+                Text(text = "Расписание",
+                    color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
                 Spacer(modifier = Modifier.width(24.dp))
             }
             Row (modifier = Modifier
@@ -91,18 +91,18 @@ fun AdminTTScreen (){
                         addNewFlag.value = false
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Show all")
+                    Text(text = "Показать")
                 }
                 Button(
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(vertical = 10.dp)
                         .weight(1f),
                     onClick = { color = Color.Green
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Add new")
+                    Text(text = "Добавить")
                 }
                 Button(
                     modifier = Modifier
@@ -114,7 +114,7 @@ fun AdminTTScreen (){
                         deleteFlag.value = true},
                     colors = ButtonDefaults.buttonColors(containerColor = color)
                 ) {
-                    Text(text = "Delete")
+                    Text(text = "Удалить")
                 }
             }
         }
@@ -145,11 +145,11 @@ fun ShowAllTT(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Show all", textAlign = TextAlign.Center,
+                Text(text = "Показать", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(2f)
@@ -185,11 +185,11 @@ fun AddNewTT(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Add new", textAlign = TextAlign.Center,
+                Text(text = "Добавить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray,  fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(1f)
@@ -204,7 +204,7 @@ fun AddNewTT(){
             TextField(
                 value = subName.value,
                 onValueChange = { subName.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Enter Sub Name") },
+                placeholder = { androidx.compose.material.Text(text = "Название предмета") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -213,7 +213,7 @@ fun AddNewTT(){
             TextField(
                 value = day.value,
                 onValueChange = { day.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Description") },
+                placeholder = { androidx.compose.material.Text(text = "День") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -222,7 +222,7 @@ fun AddNewTT(){
             TextField(
                 value = time.value,
                 onValueChange = { time.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Password") },
+                placeholder = { androidx.compose.material.Text(text = "Время") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -234,13 +234,13 @@ fun AddNewTT(){
                     var sub = subjectList.filter { it.subjectName==subName.value.text}.last()
                     var newItemTT = TTItem(sub,day.value.text,time.value.text)
                     ttList.add(newItemTT)
-                    Toast.makeText(context, "TT Added to Database", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Занятие ДОБАВЛЕНО", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "Add",
+                    text = "Добавить",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -273,11 +273,11 @@ fun DeleteTT(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Delete", textAlign = TextAlign.Center,
+                Text(text = "Удалить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -288,7 +288,7 @@ fun DeleteTT(){
             TextField(
                 value = subName.value,
                 onValueChange = { subName.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Enter Sub Name") },
+                placeholder = { androidx.compose.material.Text(text = "Название предмета") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -297,7 +297,7 @@ fun DeleteTT(){
             TextField(
                 value = day.value,
                 onValueChange = { day.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Description") },
+                placeholder = { androidx.compose.material.Text(text = "День") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -306,7 +306,7 @@ fun DeleteTT(){
             TextField(
                 value = time.value,
                 onValueChange = { time.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Password") },
+                placeholder = { androidx.compose.material.Text(text = "Время") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -318,13 +318,13 @@ fun DeleteTT(){
                     var sub = subjectList.filter { it.subjectName==subName.value.text}.last()
                     var item = TTItem(sub,day.value.text,time.value.text)
                     ttList.remove(item)
-                    Toast.makeText(context, "TT DELETED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Занятие удалено", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "delete",
+                    text = "Удалить",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )

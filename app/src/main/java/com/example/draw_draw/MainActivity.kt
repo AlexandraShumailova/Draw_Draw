@@ -38,46 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Draw_DrawTheme {
-/*                @Composable
-                fun ChooseActivity (){
-                    Column {
-                        Button(
-                            onClick = {
-                                val navigate = Intent(this@MainActivity, ClientActivity::class.java)
-                                startActivity(navigate)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
-                        ) {
-                            androidx.compose.material.Text(
-                                text = "Log In",
-                                textAlign = TextAlign.Center,
-                                color = Color.White
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(200.dp))
-
-                        TextButton(
-                            onClick = {
-                                val navigate = Intent(this@MainActivity, AdminActivity::class.java)
-                                startActivity(navigate)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            androidx.compose.material.Text(
-                                text = "Log in as an admin",
-                                textAlign = TextAlign.Center,
-                                color = Color.Gray
-                            )
-                        }
-                    }
-                }
-                ChooseActivity()
-                ch(start = this@MainActivity)*/
                 HelloScreen()
-
-
             }
         }
     }

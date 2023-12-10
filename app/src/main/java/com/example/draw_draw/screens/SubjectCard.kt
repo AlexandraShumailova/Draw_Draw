@@ -94,17 +94,19 @@ fun SubjectCard(item: Subject, from: String){
                         color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = item.decription!!,
-                        color = Color.Gray, fontSize = 10.sp,
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
                     Card(
                         backgroundColor = Color.Gray,
                     ){
                         Text(text = item.duration!!,
-                            modifier = Modifier.padding(8.dp))
+                            modifier = Modifier.padding(8.dp),
+                            color = Color.White
+                        )
                     }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = item.decription!!,
+                        color = Color.Gray, fontSize = 15.sp,
+                    )
                     Spacer(modifier = Modifier.height(10.dp))
                     androidx.compose.material3.Button(
                         onClick = { go.value = item},
@@ -112,7 +114,7 @@ fun SubjectCard(item: Subject, from: String){
                         colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
                     ) {
                         androidx.compose.material.Text(
-                            text = if (userType=="Admin"){"change"} else {"go to TT for booking"},
+                            text = if (userType=="Admin"){"Изменить"} else {"Перейти к расписанию чтобы записаться"},
                             textAlign = TextAlign.Center,
                             color = Color.White
                         )
@@ -122,7 +124,7 @@ fun SubjectCard(item: Subject, from: String){
         }
         else{
             if (userType=="Admin"){
-                ChangeSub(sub = go.value!!)
+                ChangeSub(sub = go.value!!, item, from)
             }
             else{
                 TimetableScreen(currentList = ttList.filter { it.subject.subjectName==go.value!!.subjectName })
@@ -139,7 +141,7 @@ fun SubjectCard(item: Subject, from: String){
 }
 
 @Composable
-fun ChangeSub(sub:Subject){
+fun ChangeSub(sub:Subject, item: Subject, from: String){
     var context = LocalContext.current
     val subName = remember {
         mutableStateOf(TextFieldValue())
@@ -153,80 +155,109 @@ fun ChangeSub(sub:Subject){
     val photo = remember {
         mutableStateOf(TextFieldValue())
     }
-
-    Column {
-        Spacer(modifier = Modifier.height(40.dp))
-        Column (modifier = Modifier
-            .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
-            .verticalScroll(rememberScrollState())
-        ){
-            androidx.compose.material3.Card(
+    val goBack = remember {
+        mutableStateOf(false)
+    }
+    if (!goBack.value){
+        Column {
+            Spacer(modifier = Modifier.height(5.dp))
+            Row(
                 modifier = Modifier
+                    .height(40.dp)
                     .fillMaxWidth()
-                    .height(220.dp)
-                    .clip(RoundedCornerShape(10.dp))
+                    .background(color = Color.White)
+                    .padding(start = 15.dp, end = 15.dp)
+                    .clickable { goBack.value = true },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                androidx.compose.material3.Text(
-                    text = "photo", textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold
-                )
+                Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
+                Spacer(modifier = Modifier.width(24.dp))
             }
+            Column (modifier = Modifier
+                .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
+                .verticalScroll(rememberScrollState())
+            ){
+                androidx.compose.material3.Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                ) {
+                    androidx.compose.material3.Text(
+                        text = "photo", textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(20.dp),
+                        color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold
+                    )
+                }
 //            Spacer(modifier = Modifier.height(15.dp))
 //            Text(text = "add")
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(
-                value = subName.value,
-                onValueChange = { subName.value = it },
-                placeholder = { Text(text = sub.subjectName) },
-                modifier = Modifier.fillMaxWidth(),
-                textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-                singleLine = true,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(
-                value = description.value,
-                onValueChange = { description.value = it },
-                placeholder = { Text(text = sub.decription!!) },
-                modifier = Modifier.fillMaxWidth(),
-                textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-                singleLine = true,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            TextField(
-                value = duration.value,
-                onValueChange = { duration.value = it },
-                placeholder = { Text(text = sub.duration!!) },
-                modifier = Modifier.fillMaxWidth(),
-                textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
-                singleLine = true,
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-
-            androidx.compose.material3.Button(
-                onClick = {
-                    var sub = subjectList.filter { it.subjectName==subName.value.text }.last()
-                    subjectList.remove(sub)
-                    curSubject.subjectName=subName.value.text
-                    curSubject.decription=description.value.text
-                    curSubject.duration=duration.value.text
-                    subjectList.add(curSubject)
-                    Toast.makeText(context, "Sub changed", Toast.LENGTH_SHORT).show()
-                },
-                modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
-            ) {
-                androidx.compose.material.Text(
-                    text = "Change",
-                    textAlign = TextAlign.Center,
-                    color = Color.White
+                Spacer(modifier = Modifier.height(20.dp))
+                TextField(
+                    value = subName.value,
+                    onValueChange = { subName.value = it },
+                    placeholder = { Text(text = sub.subjectName) },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
+                    singleLine = true,
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+                TextField(
+                    value = description.value,
+                    onValueChange = { description.value = it },
+                    placeholder = { Text(text = sub.decription!!) },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
+                    singleLine = true,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                TextField(
+                    value = duration.value,
+                    onValueChange = { duration.value = it },
+                    placeholder = { Text(text = sub.duration!!) },
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
+                    singleLine = true,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                androidx.compose.material3.Button(
+                    onClick = {
+                        var subs = subjectList.filter { it.subjectName==subName.value.text }
+                        if (subs.isNotEmpty()){
+                            var sub = subjectList.filter { it.subjectName==subName.value.text }.last()
+                            subjectList.remove(sub)
+                            curSubject.subjectName=subName.value.text
+                            curSubject.decription=description.value.text
+                            curSubject.duration=duration.value.text
+                            subjectList.add(curSubject)
+                            Toast.makeText(context, "ИЗМЕНЕНО", Toast.LENGTH_SHORT).show()
+                        }
+                        else{
+                            Toast.makeText(context, "Неверные данные для изменения. Попробуйте еще раз!", Toast.LENGTH_SHORT).show()
+                        }
+
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
+                ) {
+                    androidx.compose.material.Text(
+                        text = "Изменить",
+                        textAlign = TextAlign.Center,
+                        color = Color.White
+                    )
+                }
+                Spacer(modifier = Modifier.height(20.dp))
             }
-            Spacer(modifier = Modifier.height(20.dp))
         }
     }
+    else{
+        SubjectCard(item, from)
+    }
+
+
 }
 
 /*

@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.draw_draw.R
 import com.example.draw_draw.data.Booking
+import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.User
 import com.example.draw_draw.data.bookList
 import com.example.draw_draw.data.subjectList
@@ -67,15 +68,12 @@ fun AdminBookings (){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
-                Text(text = "all Bookings",
+                Text(text = "Все записи на занятия",
                     color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
                 Spacer(modifier = Modifier.width(24.dp))
             }
-            ShowBookings(bookList)
+            ShowBookings(bookList, subjectList)
         }
-//        if (showAllFlag.value){
-//
-//        }
     }
     else{
         AdminMenuScreen()
@@ -84,7 +82,7 @@ fun AdminBookings (){
 }
 
 @Composable
-fun ShowBookings(list: List<Booking>){
+fun ShowBookings(list: List<Booking>, sublist: List<Subject>){
     Column (modifier = Modifier
         .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
         .fillMaxWidth()
@@ -93,7 +91,7 @@ fun ShowBookings(list: List<Booking>){
         Column ( modifier = Modifier
             .verticalScroll(rememberScrollState())
         ){
-            subjectList.forEach{sub->
+            sublist.forEach{sub->
                 Text(
                     text = sub.subjectName,
                     color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )

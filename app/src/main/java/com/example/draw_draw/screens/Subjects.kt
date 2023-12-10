@@ -57,7 +57,7 @@ fun SubjectScreen(){
     if (thisScreen.value){
         if (go.value==null) {
             Column {
-                Head(text = "Group Lessons")
+                Head(text = "Групповые занятия")
                 //SearchField()
                 Column(
                     modifier = Modifier
@@ -93,9 +93,6 @@ fun SubjectList(go: MutableState<Subject?>){
 
 @Composable
 fun SubjectItem(item: Subject, go: MutableState<Subject?>){
-    var selectedCard = remember {
-        mutableStateOf<Subject?>(null)
-    }
     if (go.value==null) {
         Card(modifier = Modifier.clickable { go.value = item }) {
             Column(
@@ -116,10 +113,10 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                     text = item.subjectName,
                     color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Card(
                     modifier = Modifier,
-                    colors = CardDefaults.cardColors(Color.LightGray)
+                    colors = CardDefaults.cardColors(Color.DarkGray)
                 ) {
                     Text(
                         text = item.duration!!,
@@ -128,33 +125,20 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                             end = 10.dp,
                             top = 3.dp,
                             bottom = 3.dp
-                        )
+                        ),
+                        color = Color.White
                     )
                 }
-                Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = item.decription!!,
-                    color = Color.Gray, fontSize = 10.sp
+                    text = item.shortDesc!!,
+                    color = Color.Gray, fontSize = 15.sp
                 )
                 Spacer(modifier = Modifier.height(5.dp))
             }
             Spacer(modifier = Modifier.width(10.dp))
         }
         Spacer(modifier = Modifier.width(10.dp))
-
-//        if (selectedCard.value != null) {
-//            androidx.compose.material3.Button(
-//                onClick = { go.value = selectedCard.value},
-//                modifier = Modifier.fillMaxWidth(),
-//                colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
-//            ) {
-//                androidx.compose.material.Text(
-//                    text = "go to this sub card ",
-//                    textAlign = TextAlign.Center,
-//                    color = Color.White
-//                )
-//            }
-//        }
     }
 }
 

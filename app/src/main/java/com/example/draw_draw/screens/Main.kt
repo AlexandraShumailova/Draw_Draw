@@ -1,5 +1,12 @@
 package com.example.draw_draw.screens
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,6 +19,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,13 +36,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -77,7 +89,7 @@ fun Main(){
 //                        Text(text = userType)
                             if (userType!="Admin"){
                                 Spacer(modifier = Modifier.height(10.dp))
-                                TimetableOnMain("Next lesson")
+                                TimetableOnMain("Ближайшее занятие")
                             }
                             Spacer(modifier = Modifier.height(10.dp))
                             GroupLessons(go, goSubCard)
@@ -101,7 +113,7 @@ fun Main(){
 fun Head(text: String) {
     Row(
         modifier = Modifier
-            .height(40.dp)
+            .height(50.dp)
             .fillMaxWidth()
             .background(color = Color.White)
             .padding(start = 15.dp, end = 15.dp),
@@ -109,7 +121,7 @@ fun Head(text: String) {
         horizontalArrangement = Arrangement.Center
     ) {
         Text(text = text,
-            color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+            color = Color.Black, fontSize = 30.sp, fontWeight = FontWeight.Bold,)
     }
 }
 
@@ -129,13 +141,13 @@ fun TimetableOnMain(text: String) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Subject 1",
+                text = "Масляная живопись",
                 modifier = Modifier.padding(4.dp),
-                color = Color.Black, textAlign = TextAlign.Center
+                color = Color.Black, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = "09:00" + " " + "Monday",
+                text = "09:00" + " " + "Понедельник",
                 modifier = Modifier.padding(4.dp),
                 color = Color.Black, textAlign = TextAlign.Center
             )
@@ -151,7 +163,7 @@ fun GroupLessons(go: MutableState<String?>, goSubCard: MutableState<Subject?>){
         .clickable { go.value = "Group lessons" }
     ){
         Text(
-            text = "Group lesson",
+            text = "Групповые занятия",
             color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
     }
     Spacer(modifier = Modifier.height(10.dp))
@@ -174,15 +186,10 @@ fun GroupLessons(go: MutableState<String?>, goSubCard: MutableState<Subject?>){
                             .clip(RoundedCornerShape(10.dp))
                             .height(160.dp)
                             .width(240.dp))
-
+                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
-                        text = "Subject 1",
-                        color = Color.DarkGray, fontSize = 18.sp, fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Text(
-                        text = "bla bla bla",
-                        color = Color.Gray, fontSize = 10.sp
+                        text = subject.subjectName,
+                        color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                 }
@@ -197,9 +204,52 @@ fun BookButton(go: MutableState<String?>){
     Button(onClick = { go.value = "TT" },
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)) {
-        Text(text = "Booking",
+        Text(text = "Перейти к расписанию и записаться!",
             textAlign = TextAlign.Center,
             color = Color.White
         )
+    }
+}
+
+@Composable
+fun AddPicture(){
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+
+    val launcher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+            imageUri = uri
+        }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        imageUri?.let {
+            if (Build.VERSION.SDK_INT < 28) {
+                bitmap.value = MediaStore.Images
+                    .Media.getBitmap(context.contentResolver, it)
+            } else {
+                val source = ImageDecoder.createSource(context.contentResolver, it)
+                bitmap.value = ImageDecoder.decodeBitmap(source)
+            }
+
+            bitmap.value?.let { btm ->
+                Image(
+                    bitmap = btm.asImageBitmap(),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(400.dp)
+                        .padding(20.dp)
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+        Button(onClick = { launcher.launch("image/*") }) {
+            Text(text = "Pick Image")
+        }
     }
 }

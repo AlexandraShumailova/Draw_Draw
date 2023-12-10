@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -51,7 +53,7 @@ import com.example.draw_draw.screens.admin.ShowBookings
 @Composable
 fun ProfileScreen() {
     var text = remember {
-        mutableStateOf("Next lesson")
+        mutableStateOf("Ближайшее занятие")
     }
     val go = remember {
         mutableStateOf(false)
@@ -61,45 +63,44 @@ fun ProfileScreen() {
     }
     if(!go.value){
         Column {
-            Head("Your profile")
+            Head("Профиль пользователя")
             Spacer(modifier = Modifier.height(20.dp))
             Column ( modifier = Modifier
                 .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
             ){
-
-
-                if (userType!="Admin"){
-                    Row {
-                        Image(painter = painterResource(id = user1.photoId),
-                            contentDescription = "photo",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .size(80.dp)
-                                .clip(CircleShape)
-                        )
-                        Spacer(modifier = Modifier.width(40.dp))
-                        Column (){
-                            Text(
-                                text = user1.userName,
-                                color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
-                            Text(
-                                text = /*"Login:"+"  "+ */user1.login,
-                                color = Color.DarkGray, fontSize = 20.sp, )
+                Column ( modifier = Modifier
+                    .height(600.dp)
+//                    .background(color = Color.Blue)
+                ){
+                    if (userType!="Admin"){
+                        Row {
+                            Image(painter = painterResource(id = currentUser.photoId),
+                                contentDescription = "photo",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .clip(CircleShape)
+                            )
+                            Spacer(modifier = Modifier.width(20.dp))
+                            Column (){
+                                Text(
+                                    text = currentUser.userName,
+                                    color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+                                Text(
+                                    text = currentUser.login,
+                                    color = Color.DarkGray, fontSize = 18.sp, )
+                            }
                         }
-                    }
-                    Spacer(modifier = Modifier.height(15.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                    text.value = if (!seeBookings.value){
-                        "Next lesson"
-                    } else{
-                        "My TT"
-                    }
-                    TimetableOnMain(text.value)
+                        text.value = if (!seeBookings.value){
+                            "Ближайшее занятие"
+                        } else{
+                            "Мои записи"
+                        }
+                        TimetableOnMain(text.value)
 
-                    if(!seeBookings.value){
-                        Column (modifier = Modifier
-                            .height(250.dp)
-                        ){
+                        if(!seeBookings.value){
                             Spacer(modifier = Modifier.height(10.dp))
                             androidx.compose.material3.Button(
                                 onClick = { seeBookings.value=true },
@@ -107,29 +108,31 @@ fun ProfileScreen() {
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
                             ) {
                                 androidx.compose.material.Text(
-                                    text = "See my bookings",
+                                    text = "Посмотреть мои записи",
                                     textAlign = TextAlign.Center,
                                     color = Color.White
                                 )
                             }
                         }
-                    }
-                    else{
-                        ShowMyBookings(list = bookList.filter { it.user== currentUser })
-                        TextButton(
-                            onClick = { seeBookings.value=false },
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            androidx.compose.material.Text(
-                                text = "close",
-                                textAlign = TextAlign.Center,
-                                color = Color.Gray
-                            )
+                        else{
+//                            ShowMyBookings(list = bookList.filter { it.user== currentUser })
+                            Spacer(modifier = Modifier.height(10.dp))
+                            TextButton(
+                                onClick = { seeBookings.value=false },
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
+                                androidx.compose.material.Text(
+                                    text = "Свернуть",
+                                    textAlign = TextAlign.Center,
+                                    color = Color.Gray
+                                )
+                            }
+                            ShowMyBookings(list = bookList.filter { it.user== currentUser })
                         }
                     }
-                }
-                else{
-                    ShowAdminStatus()
+                    else{
+                        ShowAdminStatus()
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -139,7 +142,7 @@ fun ProfileScreen() {
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
                 ) {
                     androidx.compose.material.Text(
-                        text = "Log out",
+                        text = "Выйти из профиля",
                         textAlign = TextAlign.Center,
                         color = Color.White
                     )
@@ -157,7 +160,8 @@ fun ProfileScreen() {
 fun ShowMyBookings(list: List<Booking>){
     Spacer(modifier = Modifier.height(10.dp))
     Column ( modifier = Modifier
-        .height(210.dp)
+//        .height(320.dp)
+        .fillMaxHeight()
         .verticalScroll(rememberScrollState())
         .fillMaxWidth()
     ){
@@ -168,6 +172,7 @@ fun ShowMyBookings(list: List<Booking>){
             }
         }
     }
+    Spacer(modifier = Modifier.height(50.dp))
 }
 
 @Composable
@@ -176,15 +181,18 @@ fun MyBookItem(item: Booking){
     ){
         Column (
             modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 10.dp)
-                .fillMaxWidth()
+                .padding(10.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Center
         ){
             Text(
                 text = item.ttItem.subject.subjectName,
-                color = Color.Black, fontSize = 20.sp )
+                color = Color.Black, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.width(5.dp))
             Text(
                 text = item.ttItem.day+"   "+item.ttItem.time,
-                color = Color.DarkGray, fontSize = 20.sp, )
+                color = Color.DarkGray )
         }
         Spacer(modifier = Modifier.width(20.dp))
     }
@@ -202,6 +210,7 @@ fun ShowAdminStatus(){
             Text(
                 text = "Режим АДМИНИСТРАТОР",
                 color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+            Spacer(modifier = Modifier.width(20.dp))
             Text(
                 text = "Вам доступны специальные функции - меню на главном экране",
                 color = Color.DarkGray, fontSize = 15.sp, )

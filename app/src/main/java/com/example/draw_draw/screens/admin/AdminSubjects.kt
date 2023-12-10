@@ -77,8 +77,8 @@ fun AdminSubjectsScreen (){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
-                Text(text = "SUBJECTS",
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+                Text(text = "Групповые занятия",
+                    color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
                 Spacer(modifier = Modifier.width(24.dp))
             }
             Row (modifier = Modifier
@@ -94,18 +94,18 @@ fun AdminSubjectsScreen (){
                         addNewFlag.value = false
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Show all")
+                    Text(text = "Показать")
                 }
                 Button(
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(vertical = 10.dp)
                         .weight(1f),
                     onClick = { color = Color.Green
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Add new")
+                    Text(text = "Добавить")
                 }
                 Button(
                     modifier = Modifier
@@ -117,7 +117,7 @@ fun AdminSubjectsScreen (){
                         deleteFlag.value = true},
                     colors = ButtonDefaults.buttonColors(containerColor = color)
                 ) {
-                    Text(text = "Delete")
+                    Text(text = "Удалить")
                 }
             }
         }
@@ -150,11 +150,11 @@ fun ShowAllSubjects(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Show all", textAlign = TextAlign.Center,
+                Text(text = "Показать", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(2f)
@@ -196,11 +196,11 @@ fun AddNewSubject(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Add new", textAlign = TextAlign.Center,
+                Text(text = "Добавить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                        .padding(vertical = 20.dp, horizontal = 10.dp),
+                    color = Color.DarkGray,  fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(1f)
@@ -217,7 +217,7 @@ fun AddNewSubject(){
                 .height(220.dp)
                 .clip(RoundedCornerShape(10.dp))
             ){
-                Text(text = "photo", textAlign = TextAlign.Center,
+                Text(text = "Фото", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
@@ -229,7 +229,7 @@ fun AddNewSubject(){
             TextField(
                 value = subName.value,
                 onValueChange = { subName.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Enter Sub Name") },
+                placeholder = { androidx.compose.material.Text(text = "Название предмета") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -238,7 +238,7 @@ fun AddNewSubject(){
             TextField(
                 value = description.value,
                 onValueChange = { description.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Description") },
+                placeholder = { androidx.compose.material.Text(text = "Описание") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -247,7 +247,7 @@ fun AddNewSubject(){
             TextField(
                 value = duration.value,
                 onValueChange = { duration.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Password") },
+                placeholder = { androidx.compose.material.Text(text = "Длительность") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -260,13 +260,13 @@ fun AddNewSubject(){
                     newSubject.decription=description.value.text
                     newSubject.duration=duration.value.text
                     subjectList.add(newSubject)
-                    Toast.makeText(context, "Sub Added to Database", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "ДОБАВЛЕН!", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "Add",
+                    text = "Добавить",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -294,22 +294,22 @@ fun DeleteSubject(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Delete", textAlign = TextAlign.Center,
+                Text(text = "Удалить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
         Column (modifier = Modifier
             .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)){
-            Text(text = "delete")
+            Text(text = "Удалить")
             Spacer(modifier = Modifier.height(20.dp))
             TextField(
                 value = subName.value,
                 onValueChange = { subName.value = it },
-                placeholder = { androidx.compose.material.Text(text = "sub name") },
+                placeholder = { androidx.compose.material.Text(text = "Название предмета") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -321,13 +321,13 @@ fun DeleteSubject(){
                     var sub = subjectList.filter { it.subjectName==subName.value.text }.last()
 //                    userList.indexOf(user)
                     subjectList.remove(sub)
-                    Toast.makeText(context, "Sub DELETED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "УДАЛЕН", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "DELETE",
+                    text = "УДАЛИТЬ",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )

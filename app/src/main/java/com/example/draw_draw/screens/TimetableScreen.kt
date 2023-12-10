@@ -51,7 +51,7 @@ fun TimetableScreen(currentList: List<TTItem>){
     }
     if (goSubCardBook.value==null){
         Column {
-            Head("Timetable")
+            Head("Расписание")
             Spacer(modifier = Modifier.height(10.dp))
             ChoseDay(currentList, goSubCardBook)
         }
@@ -68,7 +68,7 @@ fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
     }
     val color = remember { mutableStateOf(Color.White) }
     val days = listOf("пн","вт","ср","чт","пт","сб","вс")
-    val datas = listOf("11","12","13","14","15","16","17")
+//    val datas = listOf("11","12","13","14","15","16","17")
 
     Row (
         modifier = Modifier
@@ -121,7 +121,7 @@ fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
 
 @Composable
 fun TimetableOfDay (day: String, list: List<TTItem>, go: MutableState<TTItem?>){
-    var listForDay = list.filter { it.day == day }
+    var listForDay = list.filter { it.day == day }.sortedWith(compareBy { it.time })
     Column ( modifier = Modifier
         .verticalScroll(rememberScrollState())
         .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
@@ -129,9 +129,6 @@ fun TimetableOfDay (day: String, list: List<TTItem>, go: MutableState<TTItem?>){
         .fillMaxHeight()
     ){
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = day,
-            color = Color.DarkGray,
-            fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(10.dp))
         listForDay.forEach{ item->
             TimetableItem(item, go)
@@ -153,7 +150,7 @@ fun TimetableItem(item:TTItem, goSubToBook: MutableState<TTItem?>){
             ) {
                 Text(
                     text = item.time,
-                    color = Color.Green,
+                    color = Color.Blue,
                     fontSize = 20.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(5.dp))

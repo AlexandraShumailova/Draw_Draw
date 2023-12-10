@@ -85,8 +85,8 @@ fun AdminClientsScreen(){
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Icon(painter = painterResource(id = R.drawable.back_icon), contentDescription = "back")
-                Text(text = "adm client",
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
+                Text(text = "Клиенты студии",
+                    color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold,)
                 Spacer(modifier = Modifier.width(24.dp))
             }
             Row (modifier = Modifier
@@ -101,18 +101,18 @@ fun AdminClientsScreen(){
                         addNewFlag.value = false
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Show all")
+                    Text(text = "Показать")
                 }
                 Button(
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(vertical = 10.dp)
                         .weight(1f),
                     onClick = { color = Color.Green
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
                     colors = ButtonDefaults.buttonColors(containerColor = color)) {
-                    Text(text = "Add new")
+                    Text(text = "Добавить")
                 }
                 Button(
                     modifier = Modifier
@@ -124,7 +124,7 @@ fun AdminClientsScreen(){
                         deleteFlag.value = true},
                     colors = ButtonDefaults.buttonColors(containerColor = color)
                 ) {
-                    Text(text = "Delete")
+                    Text(text = "Удалить")
                 }
             }
         }
@@ -162,11 +162,11 @@ fun ShowAllClients(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Show all", textAlign = TextAlign.Center,
+                Text(text = "Показать", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(2f)
@@ -179,7 +179,7 @@ fun ShowAllClients(){
         ){
             Spacer(modifier = Modifier.height(20.dp))
             Text(
-                text = "All clients",
+                text = "Список клиентов студии",
                 color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
             Spacer(modifier = Modifier.height(20.dp))
             Column ( modifier = Modifier
@@ -217,7 +217,7 @@ fun UserItem(item: User){
                     text = item.userName,
                     color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
                 Text(
-                    text = /*"Login:"+"  "+ */item.login,
+                    text = item.login,
                     color = Color.DarkGray, fontSize = 20.sp, )
             }
             Spacer(modifier = Modifier.width(20.dp))
@@ -250,11 +250,11 @@ fun AddNewClient(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Add new", textAlign = TextAlign.Center,
+                Text(text = "Добавить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray, fontWeight = FontWeight.Bold)
             }
             Box(modifier = Modifier
                 .weight(1f)
@@ -264,12 +264,11 @@ fun AddNewClient(){
         Spacer(modifier = Modifier.height(20.dp))
         Column (modifier = Modifier
             .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)){
-            Text(text = "add")
             Spacer(modifier = Modifier.height(20.dp))
             TextField(
                 value = name.value,
                 onValueChange = { name.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Enter Name") },
+                placeholder = { androidx.compose.material.Text(text = "Введите Имя") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -278,7 +277,7 @@ fun AddNewClient(){
             TextField(
                 value = login.value,
                 onValueChange = { login.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Login") },
+                placeholder = { androidx.compose.material.Text(text = "Логин") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -287,7 +286,7 @@ fun AddNewClient(){
             TextField(
                 value = password.value,
                 onValueChange = { password.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Password") },
+                placeholder = { androidx.compose.material.Text(text = "Пароль") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -300,13 +299,13 @@ fun AddNewClient(){
                     newClient.userName=name.value.text
                     newClient.password=password.value.text
                     userList.add(newClient)
-                    Toast.makeText(context, "Client Added to Database", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Клиент ДОБАВЛЕН", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "Add",
+                    text = "Добавить",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
@@ -333,22 +332,21 @@ fun DeleteClient(){
                 .height(70.dp)
                 .background(Color.White)
             ){
-                Text(text = "Delete", textAlign = TextAlign.Center,
+                Text(text = "Удалить", textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(20.dp),
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    color = Color.DarkGray,fontWeight = FontWeight.Bold)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
         Column (modifier = Modifier
             .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)){
-            Text(text = "delete")
             Spacer(modifier = Modifier.height(20.dp))
             TextField(
                 value = login.value,
                 onValueChange = { login.value = it },
-                placeholder = { androidx.compose.material.Text(text = "Login") },
+                placeholder = { androidx.compose.material.Text(text = "Логин") },
                 modifier = Modifier.fillMaxWidth(),
                 textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
                 singleLine = true,
@@ -360,13 +358,13 @@ fun DeleteClient(){
                     var user = userList.filter { it.login==login.value.text }.last()
 //                    userList.indexOf(user)
                     userList.remove(user)
-                    Toast.makeText(context, "Client DELETED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Клиент УДАЛЕН", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 androidx.compose.material.Text(
-                    text = "DELETE",
+                    text = "УДАЛИТЬ",
                     textAlign = TextAlign.Center,
                     color = Color.White
                 )
