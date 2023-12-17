@@ -89,7 +89,7 @@ fun AdminSubjectsScreen (){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = true
                         addNewFlag.value = false
                         deleteFlag.value = false},
@@ -100,7 +100,7 @@ fun AdminSubjectsScreen (){
                     modifier = Modifier
                         .padding(vertical = 10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
@@ -111,7 +111,7 @@ fun AdminSubjectsScreen (){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = false
                         deleteFlag.value = true},
@@ -135,9 +135,6 @@ fun AdminSubjectsScreen (){
     else{
         AdminMenuScreen()
     }
-
-
-
 }
 
 @Composable
@@ -159,7 +156,7 @@ fun ShowAllSubjects(){
             Box(modifier = Modifier
                 .weight(2f)
                 .height(70.dp)
-            ){        }
+            ){  }
         }
         Column {
             SubjectScreen()
@@ -223,8 +220,6 @@ fun AddNewSubject(){
                         .padding(20.dp),
                     color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold)
             }
-//            Spacer(modifier = Modifier.height(15.dp))
-//            Text(text = "add")
             Spacer(modifier = Modifier.height(20.dp))
             TextField(
                 value = subName.value,
@@ -288,7 +283,7 @@ fun DeleteSubject(){
             Box(modifier = Modifier
                 .weight(2f)
                 .height(70.dp)
-            ){        }
+            ){  }
             Box(modifier = Modifier
                 .weight(1f)
                 .height(70.dp)

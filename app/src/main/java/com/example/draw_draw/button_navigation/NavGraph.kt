@@ -10,14 +10,10 @@ import com.example.draw_draw.data.subjectList
 import com.example.draw_draw.data.ttList
 import com.example.draw_draw.data.userType
 import com.example.draw_draw.screens.Main
-import com.example.draw_draw.screens.MenuScreen
 import com.example.draw_draw.screens.ProfileScreen
 import com.example.draw_draw.screens.SubjectCard
 import com.example.draw_draw.screens.SubjectScreen
-import com.example.draw_draw.screens.TeacherDB
 import com.example.draw_draw.screens.TimetableScreen
-import com.example.draw_draw.screens.TryDB
-import com.example.draw_draw.screens.UsersDBScreens
 import com.example.draw_draw.screens.admin.AdminClientsScreen
 import com.example.draw_draw.screens.admin.AdminMenuScreen
 

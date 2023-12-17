@@ -55,6 +55,11 @@ fun SubjectCardWithBookingBtn (item: TTItem, currentList: List<TTItem>){
     val goBookings = remember {
         mutableStateOf(false)
     }
+    var numbOfPeople = bookList.filter { it.ttItem==item }.size
+    var freePl = item.free!! - numbOfPeople
+    if (freePl<0){
+        freePl = 0
+    }
     if(!goBack.value and !goBookings.value){
         Column {
             Spacer(modifier = Modifier.height(5.dp))
@@ -90,7 +95,7 @@ fun SubjectCardWithBookingBtn (item: TTItem, currentList: List<TTItem>){
                 Spacer(modifier = Modifier.height(15.dp))
                 Text(
                     text = item.subject.subjectName,
-                    color = Color.Green, fontSize = 25.sp, fontWeight = FontWeight.Bold
+                    color = Color(0, 108, 30), fontSize = 25.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Row {
@@ -116,16 +121,46 @@ fun SubjectCardWithBookingBtn (item: TTItem, currentList: List<TTItem>){
                     color = Color.DarkGray, fontSize = 15.sp,
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-
+                Text(
+                    text = "Всего мест: "+ item.free.toString(),
+                    color = Color(0, 108, 30),
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                androidx.compose.material3.Text(
+                    text = "Осталось: " + freePl.toString() + " мест",
+                    color = Color.DarkGray,
+                    fontSize = 15.sp
+                )
+                Spacer(modifier = Modifier.height(5.dp))
 
                 //book
                 if(userType!="Admin"){
                     Button(
-                        onClick = {/* add book to my booking list */
-                            var newBook = Booking(item, currentUser)
-                            currentUser.books.add(newBook.ttItem)
-                            bookList.add(newBook)
-                            Toast.makeText(context, "Вы успешно записались!", Toast.LENGTH_SHORT).show()
+                        onClick = {/* add book to booking list */
+                            var numbOfPeople = bookList.filter { it.ttItem==item }.size
+                            var test = currentUser.books.filter { it == item }
+                            var test1 = bookList.filter { it.ttItem==item }.filter { it.user== currentUser }
+                            if (test.isEmpty()and test1.isEmpty()){
+                                var test2 = currentUser.books.filter { it.day==item.day }.filter { it.time==item.time }
+                                if (test2.isEmpty()){
+                                    if (freePl>0){
+                                        var newBook = Booking(item, currentUser)
+                                        currentUser.books.add(newBook.ttItem)
+                                        bookList.add(newBook)
+                                        Toast.makeText(context, "Вы успешно записались!", Toast.LENGTH_SHORT).show()
+                                    }
+                                    else{
+                                        Toast.makeText(context, "Свободных мест нет!", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(context, "В это время Вы записаны на другое занятие!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            else{
+                                Toast.makeText(context, "Вы уже записаны!", Toast.LENGTH_SHORT).show()
+                            }
                         },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
@@ -154,7 +189,6 @@ fun SubjectCardWithBookingBtn (item: TTItem, currentList: List<TTItem>){
                 }
             }
         }
-
     }
     else{
         if (goBack.value){
@@ -164,7 +198,6 @@ fun SubjectCardWithBookingBtn (item: TTItem, currentList: List<TTItem>){
             var books = bookList.filter { it.ttItem == item }
             ShowBookingsForThis(books, item, currentList)
         }
-
     }
 }
 

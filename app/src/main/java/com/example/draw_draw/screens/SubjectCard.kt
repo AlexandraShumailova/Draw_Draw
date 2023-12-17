@@ -77,7 +77,6 @@ fun SubjectCard(item: Subject, from: String){
                     verticalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
-//                .verticalScroll(rememberScrollState())
                 ){
                     Spacer(modifier = Modifier.height(15.dp))
                     Image(painter = painterResource(id = item.photoId!!),
@@ -91,7 +90,7 @@ fun SubjectCard(item: Subject, from: String){
                     Spacer(modifier = Modifier.height(15.dp))
                     Text(
                         text = item.subjectName,
-                        color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold
+                        color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Card(
@@ -137,7 +136,6 @@ fun SubjectCard(item: Subject, from: String){
             "subjects"->SubjectScreen()
         }
     }
-
 }
 
 @Composable
@@ -192,8 +190,6 @@ fun ChangeSub(sub:Subject, item: Subject, from: String){
                         color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
                 }
-//            Spacer(modifier = Modifier.height(15.dp))
-//            Text(text = "add")
                 Spacer(modifier = Modifier.height(20.dp))
                 TextField(
                     value = subName.value,
@@ -256,24 +252,4 @@ fun ChangeSub(sub:Subject, item: Subject, from: String){
     else{
         SubjectCard(item, from)
     }
-
-
 }
-
-/*
-@Composable
-fun BackHeader(function: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .height(40.dp)
-            .fillMaxWidth()
-            .background(color = Color.Gray),
-    ) {
-        Text(
-            text = "back",
-            color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(start = 15.dp, end = 15.dp)
-        )
-    }
-}*/

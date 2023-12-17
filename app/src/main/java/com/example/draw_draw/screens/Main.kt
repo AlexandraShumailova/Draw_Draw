@@ -2,6 +2,7 @@ package com.example.draw_draw.screens
 
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -56,7 +57,6 @@ import androidx.compose.ui.unit.sp
 import com.example.draw_draw.R
 import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.subjectList
-import com.example.draw_draw.data.teacherList
 import com.example.draw_draw.data.ttList
 import com.example.draw_draw.data.userType
 import com.example.draw_draw.screens.admin.AdminMenuScreen
@@ -79,14 +79,13 @@ fun Main(){
                 "TT" -> TimetableScreen(ttList)
                 "Group lessons" -> SubjectScreen()
                 "Profile" -> print("x == 1")
-                else -> { // Note the block
+                else -> {
                     Column {
                         Head("Draw Draw")
                         Column ( modifier = Modifier
                             .verticalScroll(rememberScrollState())
                             .padding(start = 15.dp, end = 15.dp, bottom = 60.dp)
                         ){
-//                        Text(text = userType)
                             if (userType!="Admin"){
                                 Spacer(modifier = Modifier.height(10.dp))
                                 TimetableOnMain("Ближайшее занятие")
@@ -94,7 +93,6 @@ fun Main(){
                             Spacer(modifier = Modifier.height(10.dp))
                             GroupLessons(go, goSubCard)
                             Spacer(modifier = Modifier.height(10.dp))
-                            //Teachers()
                             BookButton(go)
                         }
                     }
@@ -104,9 +102,7 @@ fun Main(){
         else{
             SubjectCard(item = goSubCard.value!!, "main")
         }
-
     }
-
 }
 
 @Composable
@@ -129,7 +125,7 @@ fun Head(text: String) {
 fun TimetableOnMain(text: String) {
     Text(
         text = text,
-        color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+        color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold,
     )
     Spacer(modifier = Modifier.height(10.dp))
     Card {
@@ -147,7 +143,7 @@ fun TimetableOnMain(text: String) {
             )
             Spacer(modifier = Modifier.width(5.dp))
             Text(
-                text = "09:00" + " " + "Понедельник",
+                text = "09:00" + " " + "пн",
                 modifier = Modifier.padding(4.dp),
                 color = Color.Black, textAlign = TextAlign.Center
             )
@@ -164,7 +160,7 @@ fun GroupLessons(go: MutableState<String?>, goSubCard: MutableState<Subject?>){
     ){
         Text(
             text = "Групповые занятия",
-            color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+            color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold, )
     }
     Spacer(modifier = Modifier.height(10.dp))
     Row(
@@ -173,7 +169,6 @@ fun GroupLessons(go: MutableState<String?>, goSubCard: MutableState<Subject?>){
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
     ) {
-        //Text("Group Lessons", modifier = Modifier.weight(1f))
         subjectList.forEach{subject ->
             Card (modifier = Modifier.clickable { goSubCard.value = subject }){
                 Column (modifier = Modifier

@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,7 +71,6 @@ fun ProfileScreen() {
             ){
                 Column ( modifier = Modifier
                     .height(600.dp)
-//                    .background(color = Color.Blue)
                 ){
                     if (userType!="Admin"){
                         Row {
@@ -85,7 +85,7 @@ fun ProfileScreen() {
                             Column (){
                                 Text(
                                     text = currentUser.userName,
-                                    color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+                                    color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold, )
                                 Text(
                                     text = currentUser.login,
                                     color = Color.DarkGray, fontSize = 18.sp, )
@@ -115,7 +115,6 @@ fun ProfileScreen() {
                             }
                         }
                         else{
-//                            ShowMyBookings(list = bookList.filter { it.user== currentUser })
                             Spacer(modifier = Modifier.height(10.dp))
                             TextButton(
                                 onClick = { seeBookings.value=false },
@@ -153,7 +152,6 @@ fun ProfileScreen() {
     else{
         HelloScreen()
     }
-
 }
 
 @Composable
@@ -182,7 +180,8 @@ fun MyBookItem(item: Booking){
         Column (
             modifier = Modifier
                 .padding(10.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable {  },
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Center
         ){

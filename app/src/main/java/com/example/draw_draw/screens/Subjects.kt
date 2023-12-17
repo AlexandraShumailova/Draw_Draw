@@ -78,7 +78,6 @@ fun SubjectScreen(){
 
 @Composable
 fun SubjectList(go: MutableState<Subject?>){
-    //var listForDay = subjectList.filter { it.day == day }
     Column ( modifier = Modifier
         .fillMaxWidth()
         .fillMaxHeight()
@@ -111,7 +110,7 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
                     text = item.subjectName,
-                    color = Color.DarkGray, fontSize = 20.sp, fontWeight = FontWeight.Bold
+                    color = Color.Black, fontSize = 20.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Card(
@@ -140,27 +139,4 @@ fun SubjectItem(item: Subject, go: MutableState<Subject?>){
         }
         Spacer(modifier = Modifier.width(10.dp))
     }
-}
-
-@Composable
-fun SearchField(){
-    var queryString = remember {
-        mutableStateOf("")
-    }
-    var isActive = remember {
-        mutableStateOf(false)
-    }
-    val contextForToast = LocalContext.current.applicationContext
-//
-//    Row (
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(65.dp)
-//            .padding(horizontal = 10.dp)
-//    ){
-//    }
-//
-//    if (goDayFlag.value!=null){
-//        TimetableOfDay(goDayFlag.value!!)
-//    }
 }

@@ -1,5 +1,6 @@
 package com.example.draw_draw.screens
 
+import android.icu.util.Calendar
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.draw_draw.data.Subject
 import com.example.draw_draw.data.TTItem
+import com.example.draw_draw.data.bookList
 import com.example.draw_draw.data.subjectList
 import com.example.draw_draw.data.userType
 
@@ -60,6 +62,73 @@ fun TimetableScreen(currentList: List<TTItem>){
         SubjectCardWithBookingBtn(item = goSubCardBook.value!!, currentList)
     }
 }
+@Preview
+@Composable
+fun week(){
+    val days = listOf(1,2,3,4,5,6,7)
+    var data = Calendar.getInstance().get(Calendar.DATE)
+    var curDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+    var dayOfWeek = curDayOfWeek
+    var dayText=""
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(65.dp)
+            .padding(horizontal = 10.dp)
+    ){
+        for (i in 1..7){
+            when((curDayOfWeek) % 7){
+                1->dayText="пн"
+                2->dayText="вт"
+                3->dayText="ср"
+                4->dayText="чт"
+                5->dayText="пт"
+                6->dayText="сб"
+                0->dayText="вс"
+            }
+            Card(border = BorderStroke(2.dp, Color.Gray),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                ),
+                modifier = Modifier
+                    .padding(5.dp)
+                    .weight(1f)
+                    .height(60.dp)
+                    .clickable {  }
+
+            ){
+                Column (
+                    verticalArrangement = Arrangement.Center
+                ){
+                    Text(
+                        text = dayText,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth(),
+//                            .padding(vertical = 10.dp),
+                        color = Color.Black,
+                        fontSize = 20.sp, fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = data.toString(),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth(),
+                        color = Color.DarkGray,
+                        fontSize = 15.sp
+                    )
+                }
+            }
+            curDayOfWeek +=1
+            data +=1
+
+        }
+    }
+
+
+}
 
 @Composable
 fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
@@ -68,7 +137,7 @@ fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
     }
     val color = remember { mutableStateOf(Color.White) }
     val days = listOf("пн","вт","ср","чт","пт","сб","вс")
-//    val datas = listOf("11","12","13","14","15","16","17")
+    val datas = listOf("18","19","20","21","22","23","24")
 
     Row (
         modifier = Modifier
@@ -76,7 +145,9 @@ fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
             .height(65.dp)
             .padding(horizontal = 10.dp)
     ){
+        var i = -1
         days.forEach{day ->
+            i +=1
             Card(border = BorderStroke(1.dp, Color.LightGray),
                 colors = CardDefaults.cardColors(
                     containerColor = color.value,
@@ -96,20 +167,19 @@ fun ChoseDay(list: List<TTItem>, go: MutableState<TTItem?>){
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
-                            .fillMaxWidth()
-                            .padding(vertical = 10.dp),
+                            .fillMaxWidth(),
                         color = Color.DarkGray,
                         fontSize = 20.sp, fontWeight = FontWeight.Bold
                     )
-                    /*Text(
-                        text = day,
+                    Text(
+                        text = datas[i],
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                             .fillMaxWidth(),
                         color = Color.Gray,
-                        fontSize = 20.sp
-                    )*/
+                        fontSize = 15.sp
+                    )
                 }
             }
         }
@@ -141,6 +211,11 @@ fun TimetableOfDay (day: String, list: List<TTItem>, go: MutableState<TTItem?>){
 
 @Composable
 fun TimetableItem(item:TTItem, goSubToBook: MutableState<TTItem?>){
+    var numbOfPeople = bookList.filter { it.ttItem==item }.size
+    var freePl = item.free!! - numbOfPeople
+    if (freePl<0){
+        freePl = 0
+    }
         Card (modifier = Modifier
             .clickable { goSubToBook.value = item}
         ){
@@ -156,13 +231,19 @@ fun TimetableItem(item:TTItem, goSubToBook: MutableState<TTItem?>){
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = item.subject.subjectName,
-                    color = Color.DarkGray,
+                    color = Color.Black,
                     fontSize = 20.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(
                     text = item.subject.duration!!,
                     color = Color.Gray,
+                    fontSize = 20.sp
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                Text(
+                    text = "Осталось "+freePl.toString()+" мест",
+                    color = Color.DarkGray,
                     fontSize = 20.sp
                 )
                 Spacer(modifier = Modifier.height(5.dp))

@@ -1,6 +1,6 @@
 package com.example.draw_draw.data
 
-class Booking (
+class Booking  (
     var ttItem: TTItem,
     var user: User,
 )

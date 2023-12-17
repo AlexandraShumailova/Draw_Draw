@@ -6,10 +6,6 @@ import java.time.Duration
 class Subject (
     var subjectName: String,
     var duration: String?,
-//    var teacher: String,
-//    var numberOfPeople: Int,
-//    var time: String,
-//    var day: String,
     var photoId: Int?,
     var decription: String?,
     var shortDesc: String?,

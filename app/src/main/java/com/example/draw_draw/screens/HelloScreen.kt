@@ -64,7 +64,7 @@ fun HelloScreen(){
             ) {
                 Text(
                     text = "Добро пожаловать в Draw_Draw!",
-                    color = Color.Green, fontSize = 30.sp, fontWeight = FontWeight.Bold,
+                    color = darkGreen, fontSize = 30.sp, fontWeight = FontWeight.Bold,
                 )
             }
             Spacer(modifier = Modifier.height(20.dp))
@@ -149,7 +149,6 @@ fun HelloScreen(){
         goAdminFlag.value = false
         userType="Client"
         MainScreen()
-
     }
 
     if (goAdminFlag.value){

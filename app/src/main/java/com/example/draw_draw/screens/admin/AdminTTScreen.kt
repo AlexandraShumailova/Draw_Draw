@@ -86,7 +86,7 @@ fun AdminTTScreen (){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = true
                         addNewFlag.value = false
                         deleteFlag.value = false},
@@ -97,7 +97,7 @@ fun AdminTTScreen (){
                     modifier = Modifier
                         .padding(vertical = 10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
@@ -108,7 +108,7 @@ fun AdminTTScreen (){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = false
                         deleteFlag.value = true},
@@ -131,9 +131,8 @@ fun AdminTTScreen (){
     else{
         AdminMenuScreen()
     }
-
-
 }
+
 @Preview
 @Composable
 fun ShowAllTT(){
@@ -170,6 +169,9 @@ fun AddNewTT(){
         mutableStateOf(TextFieldValue())
     }
     val time = remember {
+        mutableStateOf(TextFieldValue())
+    }
+    val free = remember {
         mutableStateOf(TextFieldValue())
     }
 
@@ -228,11 +230,20 @@ fun AddNewTT(){
                 singleLine = true,
             )
             Spacer(modifier = Modifier.height(20.dp))
+            TextField(
+                value = free.value,
+                onValueChange = { free.value = it },
+                placeholder = { androidx.compose.material.Text(text = "Число мест") },
+                modifier = Modifier.fillMaxWidth(),
+                textStyle = TextStyle(color = Color.Black, fontSize = 15.sp),
+                singleLine = true,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
 
             androidx.compose.material3.Button(
                 onClick = {
                     var sub = subjectList.filter { it.subjectName==subName.value.text}.last()
-                    var newItemTT = TTItem(sub,day.value.text,time.value.text)
+                    var newItemTT = TTItem(sub,day.value.text,time.value.text, free.value.text.toInt())
                     ttList.add(newItemTT)
                     Toast.makeText(context, "Занятие ДОБАВЛЕНО", Toast.LENGTH_SHORT).show()
                 },
@@ -249,6 +260,7 @@ fun AddNewTT(){
         }
     }
 }
+
 @Composable
 fun DeleteTT(){
     var context = LocalContext.current
@@ -316,7 +328,9 @@ fun DeleteTT(){
             androidx.compose.material3.Button(
                 onClick = {
                     var sub = subjectList.filter { it.subjectName==subName.value.text}.last()
-                    var item = TTItem(sub,day.value.text,time.value.text)
+                    var item = ttList.filter { it.subject==sub }.filter { it.day==day.value.text }
+                        .filter { it.time==time.value.text }.last()
+//                    var item = TTItem(sub,day.value.text,time.value.text)
                     ttList.remove(item)
                     Toast.makeText(context, "Занятие удалено", Toast.LENGTH_SHORT).show()
                 },

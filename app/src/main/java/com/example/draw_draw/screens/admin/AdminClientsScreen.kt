@@ -96,7 +96,7 @@ fun AdminClientsScreen(){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = true
                         addNewFlag.value = false
                         deleteFlag.value = false},
@@ -107,7 +107,7 @@ fun AdminClientsScreen(){
                     modifier = Modifier
                         .padding(vertical = 10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = true
                         deleteFlag.value = false},
@@ -118,7 +118,7 @@ fun AdminClientsScreen(){
                     modifier = Modifier
                         .padding(10.dp)
                         .weight(1f),
-                    onClick = { color = Color.Green
+                    onClick = { color = Color(0, 108, 30)
                         showAllFlag.value = false
                         addNewFlag.value = false
                         deleteFlag.value = true},
@@ -145,10 +145,6 @@ fun AdminClientsScreen(){
         AdminMenuScreen()
     }
 
-}
-
-@Composable
-fun HeadBackToAdmMenu(text: String) {
 }
 
 @Preview
@@ -180,7 +176,7 @@ fun ShowAllClients(){
             Spacer(modifier = Modifier.height(20.dp))
             Text(
                 text = "Список клиентов студии",
-                color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+                color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold, )
             Spacer(modifier = Modifier.height(20.dp))
             Column ( modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -215,7 +211,7 @@ fun UserItem(item: User){
             Column (){
                 Text(
                     text = item.userName,
-                    color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+                    color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold, )
                 Text(
                     text = item.login,
                     color = Color.DarkGray, fontSize = 20.sp, )

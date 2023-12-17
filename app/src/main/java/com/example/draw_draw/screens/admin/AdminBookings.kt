@@ -48,10 +48,6 @@ import com.example.draw_draw.data.userList
 @Preview
 @Composable
 fun AdminBookings (){
-    var color = Color.Gray
-    val showAllFlag = remember {
-        mutableStateOf(true)
-    }
     val goMenu = remember {
         mutableStateOf(false)
     }
@@ -94,7 +90,7 @@ fun ShowBookings(list: List<Booking>, sublist: List<Subject>){
             sublist.forEach{sub->
                 Text(
                     text = sub.subjectName,
-                    color = Color.Green, fontSize = 20.sp, fontWeight = FontWeight.Bold, )
+                    color = Color(0, 108, 30), fontSize = 20.sp, fontWeight = FontWeight.Bold, )
                 Spacer(modifier = Modifier.height(15.dp))
                 list.filter { it.ttItem.subject==sub }.sortedWith(compareBy{ it.ttItem.time }).forEach{ item->
                     BookItem(item)
